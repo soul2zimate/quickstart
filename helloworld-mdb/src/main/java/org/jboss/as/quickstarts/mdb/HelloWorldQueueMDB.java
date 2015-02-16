@@ -16,9 +16,10 @@
  */
 package org.jboss.as.quickstarts.mdb;
 
-import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.ejb.MessageDrivenContext;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -33,27 +34,30 @@ import javax.jms.TextMessage;
  * 
  */
 @MessageDriven(name = "HelloWorldQueueMDB", activationConfig = {
-        @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "queue/HELLOWORLDMDBQueue"),
+        @ActivationConfigProperty(propertyName = "destination", propertyValue = "HELLOWORLDMDBQueue"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
+        @ActivationConfigProperty(propertyName = "maximumRedeliveries", propertyValue = "4"),
+        @ActivationConfigProperty(propertyName = "initialRedeliveryDelay", propertyValue = "7000"),
+
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge") })
 public class HelloWorldQueueMDB implements MessageListener {
 
-    private final static Logger LOGGER = Logger.getLogger(HelloWorldQueueMDB.class.toString());
+    @Resource
+    private MessageDrivenContext mdc;
 
     /**
      * @see MessageListener#onMessage(Message)
      */
     public void onMessage(Message rcvMessage) {
-        TextMessage msg = null;
+        TextMessage textMessage = (TextMessage) rcvMessage;
         try {
-            if (rcvMessage instanceof TextMessage) {
-                msg = (TextMessage) rcvMessage;
-                LOGGER.info("Received Message from queue: " + msg.getText());
-            } else {
-                LOGGER.warning("Message of wrong type: " + rcvMessage.getClass().getName());
-            }
+            System.out.println("\n=> " + new java.util.Date() + "\tTestMDB Received Message >  " + textMessage.getText());
+            System.out.println("\tbefore mdc.setRollbackOnly()");
+            mdc.setRollbackOnly();
+            System.out.println("\tafter mdc.setRollbackOnly()");
         } catch (JMSException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+
     }
 }
