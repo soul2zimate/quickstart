@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Jonathan Fuerth <jfuerth@redhat.com>
  */
 @SuppressWarnings("serial")
-@WebServlet("/FilterExample")
+//@WebServlet("/FilterExample")
 public class FilterExampleServlet extends HttpServlet {
 
     @Override
