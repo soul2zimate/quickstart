@@ -18,6 +18,7 @@ package org.jboss.as.quickstarts.helloworld;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -58,6 +59,17 @@ public class HelloWorldServlet extends HttpServlet {
         writer.println("<h1>" + helloService.createHelloMessage("World") + "</h1>");
         writer.println(PAGE_FOOTER);
         writer.close();
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("calling destroy method to wait");
+        try {
+            TimeUnit.SECONDS.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("sleep done");
     }
 
 }
