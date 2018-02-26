@@ -138,7 +138,9 @@ public class RemoteEJBClient {
         // the whole package name.
 
         // let's do the lookup
-        return (RemoteCalculator) context.lookup("ejb:/ejb-remote-server-side/CalculatorBean!"
+//        return (RemoteCalculator) context.lookup("ejb:/ejb-remote-server-side/CalculatorBean!"
+//        WFLY-9888 add distinct name defined in jboss-ejb3.xml
+        return (RemoteCalculator) context.lookup("ejb:/ejb-remote-server-side/distinct-name-in-jboss-ejb3-xml/CalculatorBean!"
             + RemoteCalculator.class.getName());
     }
 
@@ -180,7 +182,9 @@ public class RemoteEJBClient {
         // the whole package name.
 
         // let's do the lookup
-        return (RemoteCounter) context.lookup("ejb:/ejb-remote-server-side/CounterBean!"
+//        return (RemoteCounter) context.lookup("ejb:/ejb-remote-server-side/CounterBean!"
+//      WFLY-9888 add distinct name defined in jboss-ejb3.xml
+        return (RemoteCounter) context.lookup("ejb:/ejb-remote-server-side/distinct-name-in-jboss-ejb3-xml/CounterBean!"
             + RemoteCounter.class.getName() + "?stateful");
     }
 }
