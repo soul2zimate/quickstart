@@ -24,8 +24,6 @@ import javax.inject.Inject;
 import javax.jms.Destination;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
-import javax.jms.JMSDestinationDefinition;
-import javax.jms.JMSDestinationDefinitions;
 import javax.jms.Queue;
 import javax.jms.Topic;
 import javax.servlet.ServletException;
@@ -34,32 +32,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Definition of the two JMS destinations used by the quickstart
- * (one queue and one topic).
- */
-@JMSDestinationDefinitions(
-    value = {
-        @JMSDestinationDefinition(
-                resourceAdapter = "remote-artemis",
-                name = "java:/queue/testQueue",
-                interfaceName = "javax.jms.Queue",
-                destinationName = "testQueue",
-                properties = {
-                        "enable-amq1-prefix=false"
-                }
-        ),
-        @JMSDestinationDefinition(
-                resourceAdapter = "remote-artemis",
-                name = "java:/topic/testTopic",
-                interfaceName = "javax.jms.Topic",
-                destinationName = "testTopic",
-                properties = {
-                        "enable-amq1-prefix=false"
-                }
-        )
-    }
-)
 
 /**
  * <p>
